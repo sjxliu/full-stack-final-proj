@@ -59,7 +59,7 @@ const Sidebar = ({ user, closeToggle }) => {
                 isActive ? isActiveStyle : isNotActiveStyle
               }
               onClick={handleCloseSidebar}
-             
+              key={category.name}
             ></NavLink>
           ))}
         </div>
