@@ -28,7 +28,7 @@ const Sidebar = ({ user, closeToggle }) => {
   };
 
   return (
-    <div className="flex flex-col justify0between bg-white h-full overfull-y-scrikk min-w-210 hide-scrollbar">
+    <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
       <div className="flex flex-col">
         <Link
           to="/"
@@ -56,7 +56,7 @@ const Sidebar = ({ user, closeToggle }) => {
           {categories.slice(0, categories.length - 1).map((category) => (
             <NavLink
               to={`category/${category.name}`}
-              className={(isActive) =>
+              className={({isActive}) =>
                 isActive ? isActiveStyle : isNotActiveStyle
               }
               onClick={handleCloseSidebar}

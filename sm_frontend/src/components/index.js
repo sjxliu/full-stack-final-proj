@@ -1,3 +1,8 @@
 export {default as Sidebar} from './Sidebar'
 export {default as UserProfile} from './UserProfile'
 export {default as Login} from './Login'
+export {default as Navbar} from './Navbar'
+export {default as Feed} from './Feed'
+export {default as Create} from './Create'
+export {default as PinsDetails} from './PinsDetails'
+export {default as Search} from './Search'
