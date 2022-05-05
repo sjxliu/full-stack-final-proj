@@ -8,16 +8,14 @@ import { client } from "../client";
 import logo from "../assets/volley-logo.png";
 import Pins from "./Pins";
 import { userQuery } from "../utilities/data";
+import { fetchUser } from "../utilities/fetchUser";
 
 export const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState(null);
   const scrollRef = useRef(null);
 
-  const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : localStorage.clear();
+  const userInfo = fetchUser();
   // used for the 2nd link to get specfic user
   //undefined is no logged in user
   //storage clear for no user
