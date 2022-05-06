@@ -15,7 +15,7 @@ export const Home = () => {
   const [user, setUser] = useState(null);
   const scrollRef = useRef(null);
 
-  const userInfo = fetchUser();
+  const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
   // used for the 2nd link to get specfic user
   //undefined is no logged in user
   //storage clear for no user

@@ -19,7 +19,7 @@ export default function Login() {
       // contains same fields created in schema
       _id: googleId,
       _type: "user",
-      username: name,
+      userName: name,
       image: imageUrl,
     };
 

@@ -10,8 +10,8 @@ import { fetchUser } from "../utilities/fetchUser";
 
 const Pin = ({ pin }) => {
   const navigate = useNavigate();
-  
-  const user = fetchUser()
+
+  const user = fetchUser();
 
   const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
@@ -28,6 +28,7 @@ const Pin = ({ pin }) => {
     if (alreadySaved?.length === 0) {
       setSavingPost(true);
 
+      //updating in sanity DB
       client
         .patch(id)
         .setIfMissing({ save: [] })
@@ -48,6 +49,13 @@ const Pin = ({ pin }) => {
         });
     }
   };
+
+  const deletePin = (id) => {
+    client.delete(id).then(() => {
+      window.location.reload();
+    });
+  };
+
   return (
     <div className="m-3">
       <div
@@ -99,9 +107,49 @@ const Pin = ({ pin }) => {
                 </button>
               )}
             </div>
+            <div className="flex justify-between items-center gap-2 w-full">
+              {destination?.slice(8).length > 0 ? (
+                <a
+                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
+                  href={destination}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {/* link to pic */}
+                  <BsFillArrowUpRightCircleFill />
+                  {destination?.slice(8, 17)}...
+                </a>
+              ) : undefined}
+              {/* If same user is creator then user can delete */}
+              {postedBy?._id === user?.googleId && (
+                <button
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePin(_id);
+                  }}
+                >
+                  {" "}
+                  <AiTwotoneDelete />
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
+      <Link
+        className="flex gap-2 mt-2 items-center"
+        to={`user-profile/${postedBy?._id}`}
+      >
+        {" "}
+        <img
+          className="w-8 h-8 rounded-full object-cover"
+          src={postedBy?.image}
+          alt="user-profile"
+        />
+        <p className="font-semibold capitalize">{postedBy?.userName}</p>
+      </Link>
     </div>
   );
 };
