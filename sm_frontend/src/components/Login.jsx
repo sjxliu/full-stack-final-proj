@@ -47,7 +47,7 @@ export default function Login() {
           </div>
           <div className="shadow-2xl">
             <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_API_TOKEN_ID}
+              clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN_ID}`}
               render={(renderProps) => (
                 <button
                   type="button"

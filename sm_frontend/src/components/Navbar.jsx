@@ -5,8 +5,9 @@ import { IoMdAdd, IoMdSearch } from "react-icons/io";
 const Navbar = ({ searchTerm, setSearchTerm, user }) => {
   const nav = useNavigate();
 
-  if (!user) return null;
 
+// if(user) {
+  if(!user) return null
   return (
     <div className="flex gap-2 md:gap-5 w-full mt-5 pb-7 ">
       <div className="flex justify-start items-center w-full px-2 rounded-md bg-white border-none outline-none focus-within:shadow-sm">
@@ -38,6 +39,8 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
       </div>
     </div>
   );
-};
-
+ }
+// return null;
+// };
 export default Navbar;
+// console.log(Navbar)
