@@ -7,16 +7,23 @@ import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 
 import { client, urlFor } from "../client";
 import { fetchUser } from "../utilities/fetchUser";
+;
 
 const Pin = ({ pin }) => {
   const navigate = useNavigate();
-
-  const user = fetchUser();
 
   const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
 
   const { postedBy, image, _id, destination } = pin;
+
+  const user = fetchUser()
+
+  const deletePin = (id) => {
+    client.delete(id).then(() => {
+      window.location.reload();
+    });
+  };
 
   let alreadySaved = pin?.save?.filter(
     (item) => item?.postedBy?._id === user?.googleId
@@ -50,11 +57,6 @@ const Pin = ({ pin }) => {
     }
   };
 
-  const deletePin = (id) => {
-    client.delete(id).then(() => {
-      window.location.reload();
-    });
-  };
 
   return (
     <div className="m-3">
@@ -117,7 +119,7 @@ const Pin = ({ pin }) => {
                 >
                   {/* link to pic */}
                   <BsFillArrowUpRightCircleFill />
-                  {destination?.slice(8, 17)}...
+                  {destination.length > 15 ? `${destination.slice(0,15)}...`: destination}
                 </a>
               ) : undefined}
               {/* If same user is creator then user can delete */}

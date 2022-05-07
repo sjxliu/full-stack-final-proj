@@ -15,7 +15,7 @@ export const Home = () => {
   const [user, setUser] = useState(null);
   const scrollRef = useRef(null);
 
-  const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
+  const userInfo = fetchUser()
   // used for the 2nd link to get specfic user
   //undefined is no logged in user
   //storage clear for no user
@@ -27,6 +27,7 @@ export const Home = () => {
       setUser(data[0]);
       // get one specfic user
     });
+   
   }, []);
   // using sanity query to get user
   useEffect(() => {

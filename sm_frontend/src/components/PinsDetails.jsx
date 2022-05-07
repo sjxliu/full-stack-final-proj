@@ -17,6 +17,33 @@ const PinsDetails = ({ user }) => {
   //ID of post
   const { pinId } = useParams();
 
+  const addComment = () => {
+    if (Comment) {
+      setAddComment(true);
+      client
+        .patch(pinId)
+        // updating (patching) the details on a post
+        .setIfMissing({ comments: [] })
+        //if no comments, giving unique ID
+        .insert("after", "comments[-1]", [
+          {
+            Comment,
+            _key: uuidv4(),
+            postedBy: {
+              _type: "postedBy",
+              _ref: user._id,
+            },
+          },
+        ])
+        .commit()
+        .then(() => {
+          fetchPinDetails();
+          setComment("");
+          setAddComment(false);
+        });
+    }
+  };
+
   const fetchPinDetails = () => {
     let query = pinDetailQuery(pinId);
 
@@ -97,7 +124,7 @@ const PinsDetails = ({ user }) => {
               {PinDetails?.comments?.map((i) => (
                 <div
                   className="flex gap-2 mt-5 items-center bg-white rounded-lg"
-                  key={i.comments}
+                  key={i.Comment}
                 >
                   <img
                     className="w-10 h-10 rounded-full cursor-pointer"
@@ -106,13 +133,47 @@ const PinsDetails = ({ user }) => {
                   />
                   <div className="flex flex-col">
                     <p className="font-bold">{i.postedBy?.userName}</p>
-                    <p>{i.comments}</p>
+                    <p>{i.Comment}</p>
                   </div>
                 </div>
               ))}
             </div>
+            <div className="flex flex-wrap mt-6 gap-3">
+              <Link to={`/user-profile/${user._id}`}>
+                <img
+                  src={user.image}
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  alt="user-profile"
+                />
+              </Link>
+              <input
+                className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
+                type="text"
+                placeholder="Leave a (nice) comment"
+                value={Comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button
+                className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
+                type="button"
+                onClick={AddComment}
+              >
+                {AddComment ? "Working on it..." : "Post"}
+              </button>
+            </div>
           </div>
         </div>
+      )}
+      {console.log(Pins)}
+      {Pins?.length > 0 && (
+        <h2 className="text-center font-bold text-2xl mt-8 mb-4">
+          More like this
+        </h2>
+      )}
+      {Pins ? (
+        <Layout pins={Pins} />
+      ) : (
+        <Spinner message="Loading more for you" />
       )}
     </>
   );
