@@ -27,9 +27,8 @@ function Feed() {
     }
   }, [categoryId]);
   if (Loading) return <Spinner message="Adding new plays soon!" />;
-  return <div>
-    {Pins && <Layout pins={Pins}/>}
-  </div>;
+  if (!Pins?.length) return <h2>No posts under this category</h2>;
+  return <div>{Pins && <Layout pins={Pins} />}</div>;
 }
 
 export default Feed;

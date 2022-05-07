@@ -3,21 +3,13 @@ import { NavLink, Link } from "react-router-dom";
 import { RiHomeFill } from "react-icons/ri";
 import { IoIoArrowForward } from "react-icons/io";
 
+import { categories } from "../utilities/data";
 import logo from "../assets/volley-logo.png";
 
 const isActiveStyle =
   "flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize";
 const isNotActiveStyle =
   "flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize";
-
-const categories = [
-  { name: "Hot Plays" },
-  { name: "Trends" },
-  { name: "Art" },
-  { name: "Gossip" },
-  { name: "Gaming" },
-  { name: "Other" },
-];
 
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
@@ -53,16 +45,21 @@ const Sidebar = ({ user, closeToggle }) => {
             Discover Categories
           </h3>
           {/* iterating through different categories, last one will be other */}
-          {categories.slice(0, categories.length - 1).map((category) => (
+          {categories.slice(0, categories.length - 1).map((categories) => (
             <NavLink
-              to={`category/${category.name}`}
-              className={({isActive}) =>
+              to={`category/${categories.name}`}
+              className={({ isActive }) =>
                 isActive ? isActiveStyle : isNotActiveStyle
               }
               onClick={handleCloseSidebar}
-              key={category.name}
+              key={categories.name}
             >
-              {category.name}
+              <img
+              alt="category picture"
+                className="w-8 h-8 rounded-full shadow-sm"
+                src={categories.image}
+              />
+              {categories.name}
             </NavLink>
           ))}
         </div>
